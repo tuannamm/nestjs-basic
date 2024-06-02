@@ -15,7 +15,7 @@ async function bootstrap() {
     methods: 'GET, POST, PUT, DELETE, PATCH'
   });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  // app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)));
+  app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)));
   await app.listen(3000);
 }
 bootstrap();
