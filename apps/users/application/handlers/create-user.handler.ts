@@ -6,7 +6,7 @@ import { CreateUserCommand } from '../create-user.command';
 import { UserEntity } from 'apps/users/domain/entities/user.entities';
 import { CanNotCreateUser, MissingEmail, MissingPassword } from 'apps/users/user.exception';
 import { CommonUtils } from 'libs/utils/utils.common';
-import { PrintLog } from 'libs/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {

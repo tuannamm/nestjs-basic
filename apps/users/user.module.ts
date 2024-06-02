@@ -12,23 +12,25 @@ import { CreateUserHandler } from './application/handlers/create-user.handler';
 import { FindUserByIdHandler } from './application/queries/find-user-by-id.query';
 import { UpdateUserHandler } from './application/handlers/update-user.handler';
 import { DeleteUserHandler } from './application/handlers/delete-user.handler';
+import { UserService } from './user.service';
 
 const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
 
-@Module({
-  imports: [
-    CqrsModule,
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_DB_URI')
-      }),
-      inject: [ConfigService]
+const repositories = [
+  MongooseModule.forRootAsync({
+    imports: [ConfigModule],
+    useFactory: async (configService: ConfigService) => ({
+      uri: configService.get<string>('MONGO_DB_URI')
     }),
-    MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }])
-  ],
+    inject: [ConfigService]
+  }),
+  MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }])
+];
+
+@Module({
+  imports: [CqrsModule, ...repositories],
   controllers: [UserController],
-  providers: [...handlers, CommonUtils],
-  exports: [...handlers]
+  providers: [...handlers, CommonUtils, UserService],
+  exports: [...handlers, ...repositories, MongooseModule, UserService]
 })
 export class UserModule {}

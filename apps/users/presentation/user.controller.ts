@@ -3,13 +3,13 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 import { CreateUserCommand } from '../application/create-user.command';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { PrintLog } from 'libs/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
 import { FindUserByIdQuery } from '../application/find-user-by-id.query';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/update-user.command';
 import { DeleteUserCommand } from '../application/delete-user.command';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
@@ -24,6 +24,7 @@ export class UserController {
   @Get(':id')
   @PrintLog
   async getUserById(@Param('id') id: string) {
+    console.log('id', id);
     const query = new FindUserByIdQuery(id);
     return this.queryBus.execute(query);
   }

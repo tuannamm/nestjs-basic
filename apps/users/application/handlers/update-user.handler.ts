@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateUserCommand } from '../update-user.command';
-import { PrintLog } from 'libs/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserEntity } from 'apps/users/domain/entities/user.entities';
 import { Model } from 'mongoose';

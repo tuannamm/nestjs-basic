@@ -6,4 +6,8 @@ export class CommonUtils {
     const hash = bcrypt.hashSync(password, salt);
     return hash;
   }
+
+  public isValidPassword(password: string, hash: string): boolean {
+    return bcrypt.compareSync(password, hash);
+  }
 }
