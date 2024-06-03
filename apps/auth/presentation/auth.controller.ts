@@ -6,7 +6,7 @@ import { LocalAuthGuard } from '../guard/local-auth.guard';
 
 import { Public } from 'libs/decorators/public/public.decorator';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private readonly commandBus: CommandBus) {}
 

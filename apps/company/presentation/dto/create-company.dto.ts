@@ -1,12 +1,12 @@
-import { Prop } from '@nestjs/mongoose';
+import { IsString } from 'class-validator';
 
 export class CreateCompanyDTO {
-  @Prop()
+  @IsString()
   name: string;
 
-  @Prop()
+  @IsString()
   description: string;
 
-  @Prop()
+  @IsString()
   address: string;
 }

@@ -1,10 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<UserEntity>;
 
 @Schema({ timestamps: true })
 export class UserEntity {
+  @Prop()
+  _id: mongoose.Schema.Types.ObjectId;
+
   @Prop()
   name: string;
 
@@ -26,6 +29,9 @@ export class UserEntity {
 
   @Prop()
   address: string;
+
+  @Prop()
+  role: string;
 
   @Prop()
   isDeleted: boolean;

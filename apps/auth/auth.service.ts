@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 import { CommonUtils } from 'libs/utils/utils.common';
 import { UserService } from 'apps/users/user.service';
 import { UserDoesNotExist } from 'apps/auth/auth.exception';
-import { ConfigService } from '@nestjs/config';
+import { IUser } from './presentation/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -23,13 +24,18 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.email, sub: user.id };
+  async login(user: IUser) {
+    const { _id, username, email, role } = user;
+    const payload = { sub: 'token login', iss: 'from server', _id, username, email, role };
     return {
       access_token: this.jwtService.sign(payload, {
         secret: this.configService.get<string>('JWT_SECRET'),
         expiresIn: this.configService.get<string>('JWT_EXPIRES_IN')
-      })
+      }),
+      _id,
+      username,
+      email,
+      role
     };
   }
 }
