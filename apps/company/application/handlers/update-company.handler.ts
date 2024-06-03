@@ -1,17 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+
 import { UpdateCompanyCommand } from '../update-company.command';
 import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
 import { CanNotUpdateCompany } from 'apps/company/company.exception';
-import { InjectModel } from '@nestjs/mongoose';
 import { CompanyEntity } from 'apps/company/entities/company.entity';
-import { Model, Types } from 'mongoose';
-import { UserEntity } from 'apps/users/domain/entities/user.entities';
 
 @CommandHandler(UpdateCompanyCommand)
 export class UpdateCompanyHandler implements ICommandHandler<UpdateCompanyCommand> {
   constructor(
     @InjectModel(CompanyEntity.name)
-    private readonly companyModel: Model<UserEntity>
+    private readonly companyModel: Model<CompanyEntity>
   ) {}
 
   @PrintLog

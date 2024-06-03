@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-// import { CompanyService } from './company.service';
 import { CompanyController } from './presentation/company.controller';
-import { CreateCompanyHandler } from './application/handlers/create-company.handler';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CompanyEntity, CompanySchema } from './entities/company.entity';
-import { UpdateCompanyHandler } from './application/handlers/update-company.handler';
 
-const handlers = [CreateCompanyHandler, UpdateCompanyHandler];
+import { CompanyEntity, CompanySchema } from './entities/company.entity';
+
+import { CreateCompanyHandler } from './application/handlers/create-company.handler';
+import { UpdateCompanyHandler } from './application/handlers/update-company.handler';
+import { DeleteCompanyHandler } from './application/handlers/delete-company.handler';
+
+const handlers = [CreateCompanyHandler, UpdateCompanyHandler, DeleteCompanyHandler];
 
 const repositories = [
   MongooseModule.forRootAsync({
