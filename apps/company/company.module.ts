@@ -6,8 +6,9 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CompanyEntity, CompanySchema } from './entities/company.entity';
+import { UpdateCompanyHandler } from './application/handlers/update-company.handler';
 
-const handlers = [CreateCompanyHandler];
+const handlers = [CreateCompanyHandler, UpdateCompanyHandler];
 
 const repositories = [
   MongooseModule.forRootAsync({
