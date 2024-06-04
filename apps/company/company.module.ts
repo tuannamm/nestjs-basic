@@ -6,11 +6,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { CompanyEntity, CompanySchema } from './entities/company.entity';
 
-import { CreateCompanyHandler } from './application/handlers/create-company.handler';
-import { UpdateCompanyHandler } from './application/handlers/update-company.handler';
-import { DeleteCompanyHandler } from './application/handlers/delete-company.handler';
+import { CreateCompanyHandler } from './application/commands/handlers/create-company.handler';
+import { UpdateCompanyHandler } from './application/commands/handlers/update-company.handler';
+import { DeleteCompanyHandler } from './application/commands/handlers/delete-company.handler';
+import { FindListCompanyHandler } from './application/queries/handlers/find-list-company.handler';
 
-const handlers = [CreateCompanyHandler, UpdateCompanyHandler, DeleteCompanyHandler];
+const handlers = [FindListCompanyHandler, CreateCompanyHandler, UpdateCompanyHandler, DeleteCompanyHandler];
 
 const repositories = [
   MongooseModule.forRootAsync({

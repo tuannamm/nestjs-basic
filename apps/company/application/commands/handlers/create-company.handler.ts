@@ -1,11 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateCompanyCommand } from '../create-company.command';
+
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CompanyEntity } from 'apps/company/entities/company.entity';
 import { CanNotCreateCompany, MissingAddress, MissingDescription, MissingName } from 'apps/company/company.exception';
 import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
+import { CreateCompanyCommand } from '../create-company.command';
 
 @CommandHandler(CreateCompanyCommand)
 export class CreateCompanyHandler implements ICommandHandler<CreateCompanyCommand> {

@@ -5,7 +5,8 @@ export enum CompanyExceptionCode {
   MISSING_NAME = 502,
   MISSING_ADDRESS = 503,
   MISSING_DESCRIPTION = 504,
-  CAN_NOT_UPDATE_COMPANY = 505
+  CAN_NOT_UPDATE_COMPANY = 505,
+  CAN_NOT_GET_LIST_COMPANY = 506
 }
 
 export class CanNotCreateCompany extends ServiceException {
