@@ -38,3 +38,9 @@ export class CanNotUpdateCompany extends ServiceException {
     super('Can not update company', CompanyExceptionCode.CAN_NOT_UPDATE_COMPANY);
   }
 }
+
+export class CanNotGetListCompany extends ServiceException {
+  constructor() {
+    super('Can not get list company', CompanyExceptionCode.CAN_NOT_GET_LIST_COMPANY);
+  }
+}

@@ -5,6 +5,7 @@ import aqp from 'api-query-params';
 
 import { CompanyEntity } from 'apps/company/entities/company.entity';
 import { FindListCompanyQuery } from '../find-list-company.query';
+import { CanNotGetListCompany } from 'apps/company/company.exception';
 
 @QueryHandler(FindListCompanyQuery)
 export class FindListCompanyHandler implements IQueryHandler<FindListCompanyQuery> {
@@ -33,6 +34,8 @@ export class FindListCompanyHandler implements IQueryHandler<FindListCompanyQuer
       .sort(sort as any)
       .populate(population)
       .exec();
+
+    if (!result) throw new CanNotGetListCompany();
 
     return {
       meta: {
