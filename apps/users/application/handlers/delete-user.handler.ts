@@ -4,7 +4,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 import { UserDocument, UserEntity } from 'apps/users/domain/entities/user.entities';
 
-import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 import { CanNotDeleteUser } from 'apps/users/user.exception';
 
 import { DeleteUserCommand } from '../delete-user.command';

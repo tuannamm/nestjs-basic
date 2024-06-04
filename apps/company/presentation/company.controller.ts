@@ -1,8 +1,7 @@
 import { Controller, Post, Body, Patch, Param, Delete, Get, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
-import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
-import { User } from 'libs/decorators/user/user.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 import { CreateCompanyDTO } from './dto/create-company.dto';
 import { UpdateCompanyDTO } from './dto/update-company.dto';
@@ -10,9 +9,11 @@ import { UpdateCompanyDTO } from './dto/update-company.dto';
 import { CreateCompanyCommand } from '../application/commands/create-company.command';
 import { DeleteCompanyCommand } from '../application/commands/delete-company.command';
 import { UpdateCompanyCommand } from '../application/commands/update-company.command';
+import { FindListCompanyQuery } from '../application/queries/find-list-company.query';
 
 import { IUser } from 'apps/auth/presentation/user.interface';
-import { FindListCompanyQuery } from '../application/queries/find-list-company.query';
+import { ResponseMessage } from 'libs/decorators/response-message.decorator';
+import { User } from 'libs/decorators/user.decorator';
 
 @Controller('companies')
 export class CompanyController {
@@ -42,6 +43,7 @@ export class CompanyController {
   }
 
   @Get()
+  @ResponseMessage('List company successfully fetched')
   async findListCompany(@Query('page') currentPage: string, @Query('limit') limit: string, @Query() qs) {
     const query = new FindListCompanyQuery(currentPage, limit, qs);
     return this.queryBus.execute(query);

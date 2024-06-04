@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 
 import { CompanyEntity } from 'apps/company/entities/company.entity';
 import { CanNotCreateCompany, MissingAddress, MissingDescription, MissingName } from 'apps/company/company.exception';
-import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 import { CreateCompanyCommand } from '../create-company.command';
 
 @CommandHandler(CreateCompanyCommand)

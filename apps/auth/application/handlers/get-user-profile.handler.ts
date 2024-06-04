@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
-import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 import { AuthService } from 'apps/auth/auth.service';
 import { GetUserProfileLoginCommand } from '../get-user-profile.command';
 

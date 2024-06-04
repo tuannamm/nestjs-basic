@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 import { CreateUserCommand } from '../application/create-user.command';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { PrintLog } from 'libs/decorators/print-log/print-log.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 import { FindUserByIdQuery } from '../application/find-user-by-id.query';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/update-user.command';
