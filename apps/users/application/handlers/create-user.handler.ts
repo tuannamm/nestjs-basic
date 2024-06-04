@@ -25,7 +25,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
     const hashedPassword = this.commonFunction.hashPassword(password);
 
-    const createUser = await this.userModel.create({
+    const result = await this.userModel.create({
       name,
       age,
       email,
@@ -34,8 +34,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       address
     });
 
-    if (!createUser) throw new CanNotCreateUser();
+    if (!result) throw new CanNotCreateUser();
 
-    return createUser;
+    return result;
   }
 }

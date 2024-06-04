@@ -19,7 +19,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
 
     if (!id) throw new MissingId();
 
-    const updated = await this.userModel.findByIdAndUpdate(id, {
+    const result = await this.userModel.findByIdAndUpdate(id, {
       name,
       address,
       age,
@@ -27,6 +27,6 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
       phone
     });
 
-    if (!updated) throw new CanNotUpdateUser();
+    if (!result) throw new CanNotUpdateUser();
   }
 }

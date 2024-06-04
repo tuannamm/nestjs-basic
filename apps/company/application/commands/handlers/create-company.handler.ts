@@ -23,15 +23,15 @@ export class CreateCompanyHandler implements ICommandHandler<CreateCompanyComman
     if (!address) throw new MissingAddress();
     if (!description) throw new MissingDescription();
 
-    const created = await this.companyModel.create({
+    const result = await this.companyModel.create({
       name,
       address,
       description,
       createdBy: user
     });
 
-    if (!created) throw new CanNotCreateCompany();
+    if (!result) throw new CanNotCreateCompany();
 
-    return created;
+    return result;
   }
 }

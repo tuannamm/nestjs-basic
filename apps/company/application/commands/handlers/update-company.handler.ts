@@ -18,15 +18,15 @@ export class UpdateCompanyHandler implements ICommandHandler<UpdateCompanyComman
   async execute(command: UpdateCompanyCommand): Promise<any> {
     const { id, name, address, description, user } = command;
 
-    const updated = await this.companyModel.findByIdAndUpdate(new Types.ObjectId(id), {
+    const result = await this.companyModel.findByIdAndUpdate(new Types.ObjectId(id), {
       name,
       address,
       description,
       updatedBy: user
     });
 
-    if (!updated) throw new CanNotUpdateCompany();
+    if (!result) throw new CanNotUpdateCompany();
 
-    return updated;
+    return result;
   }
 }

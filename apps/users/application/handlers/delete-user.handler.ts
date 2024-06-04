@@ -20,12 +20,12 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
   async execute(command: DeleteUserCommand) {
     const { id } = command;
 
-    const deleted = await this.userModel.softDelete({
+    const result = await this.userModel.softDelete({
       _id: id
     });
 
-    if (!deleted) throw new CanNotDeleteUser();
+    if (!result) throw new CanNotDeleteUser();
 
-    return deleted;
+    return result;
   }
 }

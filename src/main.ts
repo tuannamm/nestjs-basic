@@ -3,6 +3,7 @@ import { LogLevel, ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import { JwtAuthGuard } from 'apps/auth/guard/jwt-auth.guard';
+import { TransformInterceptor } from 'libs/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const logLevel = (process.env.LOG_LEVEL || 'log').split(',').map((lv) => lv.toLowerCase() as LogLevel);
@@ -14,6 +15,7 @@ async function bootstrap() {
     origin: '*',
     methods: 'GET, POST, PUT, DELETE, PATCH'
   });
+  app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)));
   await app.listen(3000);

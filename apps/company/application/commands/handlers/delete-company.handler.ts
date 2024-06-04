@@ -16,10 +16,10 @@ export class DeleteCompanyHandler implements ICommandHandler<DeleteCompanyComman
   async execute(command: DeleteCompanyCommand) {
     const { id, user } = command;
 
-    const deleted = await this.companyModel.deleteOne({ _id: new Types.ObjectId(id) }, { deletedBy: user });
+    const result = await this.companyModel.deleteOne({ _id: new Types.ObjectId(id) }, { deletedBy: user });
 
-    if (!deleted) throw new Error('Can not delete company');
+    if (!result) throw new Error('Can not delete company');
 
-    return deleted;
+    return result;
   }
 }
