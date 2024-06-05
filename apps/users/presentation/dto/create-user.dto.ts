@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsObject, IsString, ValidateNested } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import mongoose from 'mongoose';
 
 export class CompanyDTO {
@@ -31,6 +31,7 @@ export class CreateUserDTO {
   address: string;
 
   @IsString()
+  @IsOptional()
   role: string
 
   @IsString()
@@ -39,6 +40,7 @@ export class CreateUserDTO {
   @IsObject()
   @ValidateNested()
   @Type(() => CompanyDTO)
+  @IsOptional()
   company: CompanyDTO
 }
 

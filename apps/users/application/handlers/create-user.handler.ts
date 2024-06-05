@@ -1,6 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 import { CreateUserCommand } from '../create-user.command';
 import { UserEntity } from 'apps/users/domain/entities/user.entities';
@@ -18,7 +19,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
   @PrintLog
   async execute(command: CreateUserCommand) {
-    const { name, age, email, password, phone, address, role, gender, company  } = command;
+    const { name, age, email, password, address, gender } = command;
 
     if (!email) throw new MissingEmail();
     if (!password) throw new MissingPassword();
@@ -30,11 +31,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       age,
       email,
       password: hashedPassword,
-      phone,
       address,
-      role,
-      gender,
-      company
+      gender
     });
 
     if (!result) throw new CanNotCreateUser();

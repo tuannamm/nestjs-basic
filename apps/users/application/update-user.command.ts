@@ -1,15 +1,13 @@
-import { OmitType } from '@nestjs/mapped-types';
-import { CreateUserCommand } from './create-user.command';
-
-export class UpdateUserCommand extends OmitType(CreateUserCommand, ['password']) {
+export class UpdateUserCommand {
   constructor(
     public readonly id: string,
     public readonly name: string,
-    public readonly address: string,
     public readonly age: number,
     public readonly email: string,
-    public readonly phone: string
-  ) {
-    super();
-  }
+    public readonly phone: string,
+    public readonly address: string,
+    public readonly role: string,
+    public readonly gender: string,
+    public readonly company: any,
+  ) {}
 }
