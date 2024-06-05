@@ -25,7 +25,13 @@ export class UserEntity {
   password: string;
 
   @Prop()
-  phone: string;
+  refreshToken: string;
+
+  @Prop({ type: Object })
+  company: {
+    _id: mongoose.Schema.Types.ObjectId;
+    name: string;
+  };
 
   @Prop()
   address: string;
@@ -33,6 +39,9 @@ export class UserEntity {
   @Prop()
   role: string;
 
+  @Prop()
+  gender: string;
+ 
   @Prop()
   isDeleted: boolean;
 
@@ -44,6 +53,24 @@ export class UserEntity {
 
   @Prop()
   updatedDate: Date;
+
+  @Prop({ type: Object })
+  createdBy: {
+    _id: mongoose.Schema.Types.ObjectId;
+    email: string;
+  };
+
+  @Prop({ type: Object })
+  updatedBy: {
+    _id: mongoose.Schema.Types.ObjectId;
+    email: string;
+  };
+
+  @Prop({ type: Object })
+  deletedBy: {
+    _id: mongoose.Schema.Types.ObjectId;
+    email: string;
+  };
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserEntity);

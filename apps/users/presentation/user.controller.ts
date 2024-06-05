@@ -16,15 +16,14 @@ export class UserController {
   @Post('create')
   @PrintLog
   async createUser(@Body() createUserBody: CreateUserDTO) {
-    const { name, age, email, password, phone, address } = createUserBody;
-    const command = new CreateUserCommand(name, age, email, password, phone, address);
+    const { name, age, email, password, phone, address, role, company, gender } = createUserBody;
+    const command = new CreateUserCommand(name, age, email, password, phone, address, role, gender, company);
     return this.commandBus.execute(command);
   }
 
   @Get(':id')
   @PrintLog
   async getUserById(@Param('id') id: string) {
-    console.log('id', id);
     const query = new FindUserByIdQuery(id);
     return this.queryBus.execute(query);
   }
