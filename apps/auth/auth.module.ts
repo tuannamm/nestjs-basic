@@ -14,8 +14,9 @@ import { LoginHandler } from './application/handlers/login.handler';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategy/jwt-strategy';
 import { GetUserProfileHandler } from './application/handlers/get-user-profile.handler';
+import { RegisterHandler } from './application/handlers/register.handler';
 
-const handler = [GetUserProfileHandler, LoginHandler];
+const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler];
 
 @Module({
   imports: [

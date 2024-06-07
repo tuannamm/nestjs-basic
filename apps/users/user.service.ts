@@ -14,4 +14,20 @@ export class UserService {
   async findOneByEmail({ email }): Promise<UserEntity | null> {
     return this.userModel.findOne({ email }).exec();
   }
+
+  async registerUser({ email, password, name, age, gender, address }): Promise<any> {
+    const result = await this.userModel.create({
+      email,
+      password,
+      name,
+      age,
+      gender,
+      address
+    });
+
+    return {
+      _id: result._id,
+      createdAt: result.createdAt
+    };
+  }
 }

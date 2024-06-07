@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<UserEntity>;
@@ -41,7 +41,7 @@ export class UserEntity {
 
   @Prop()
   gender: string;
- 
+
   @Prop()
   isDeleted: boolean;
 
@@ -71,6 +71,12 @@ export class UserEntity {
     _id: mongoose.Schema.Types.ObjectId;
     email: string;
   };
+
+  @Prop()
+  createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserEntity);

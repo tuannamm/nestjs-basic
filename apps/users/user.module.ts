@@ -6,13 +6,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { UserController } from './presentation/user.controller';
 import { UserEntity, UserSchema } from './domain/entities/user.entities';
-import { CommonUtils } from 'libs/utils/utils.common';
 
 import { CreateUserHandler } from './application/handlers/create-user.handler';
 import { FindUserByIdHandler } from './application/queries/find-user-by-id.query';
 import { UpdateUserHandler } from './application/handlers/update-user.handler';
 import { DeleteUserHandler } from './application/handlers/delete-user.handler';
 import { UserService } from './user.service';
+import { CommonUtils } from 'libs/utils/utils.common';
 
 const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
 

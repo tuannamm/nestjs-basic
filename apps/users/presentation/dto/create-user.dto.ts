@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 export class CompanyDTO {
   @IsString()
-  _id: mongoose.Schema.Types.ObjectId;;
+  _id: mongoose.Schema.Types.ObjectId;
 
   @IsString()
   name: string;
@@ -32,7 +32,7 @@ export class CreateUserDTO {
 
   @IsString()
   @IsOptional()
-  role: string
+  role: string;
 
   @IsString()
   gender: string;
@@ -41,7 +41,5 @@ export class CreateUserDTO {
   @ValidateNested()
   @Type(() => CompanyDTO)
   @IsOptional()
-  company: CompanyDTO
+  company: CompanyDTO;
 }
-
-
