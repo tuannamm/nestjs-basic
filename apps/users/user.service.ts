@@ -33,7 +33,10 @@ export class UserService {
 
   async userExists({ email }): Promise<boolean> {
     const existed = await this.userModel.findOne({ email });
-
     return !!existed;
+  }
+
+  async updateUserToken(refreshToken: string, _id: string) {
+    return await this.userModel.updateOne({ _id }, { refreshToken });
   }
 }

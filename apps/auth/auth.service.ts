@@ -28,6 +28,7 @@ export class AuthService {
     const { _id, username, email, role } = user;
     const payload = { sub: 'token login', iss: 'from server', _id, username, email, role };
     const refreshToken = await this.createRefreshToken(payload);
+    await this.userService.updateUserToken(refreshToken, _id);
     return {
       access_token: this.jwtService.sign(payload, {
         secret: this.configService.get<string>('JWT_SECRET'),

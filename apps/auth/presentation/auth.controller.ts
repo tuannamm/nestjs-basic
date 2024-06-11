@@ -1,5 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
-import { Controller, Get, Post, Request, UseGuards, Body } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards, Body, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 import { LoginCommand } from '../application/login.command';
 import { RegisterCommand } from '../application/register.command';
@@ -28,8 +29,8 @@ export class AuthController {
   @Post('/login')
   @ResponseMessage('User login')
   @ResponseMessage('Login successfully')
-  async login(@Request() request) {
-    const command = new LoginCommand(request.user);
+  async login(@Res({ passthrough: true }) response: Response, @Request() request) {
+    const command = new LoginCommand(request.user, response);
     return this.commandBus.execute(command);
   }
 
