@@ -16,8 +16,9 @@ import { JwtStrategy } from './strategy/jwt-strategy';
 import { GetUserProfileHandler } from './application/handlers/get-user-profile.handler';
 import { RegisterHandler } from './application/handlers/register.handler';
 import { IsEmailUserAlreadyExistConstraint } from 'apps/users/validate-email';
+import { GetNewAccessTokenHandler } from './application/handlers/get-new-access-token.handler';
 
-const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler];
+const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler, GetNewAccessTokenHandler];
 
 @Module({
   imports: [
@@ -45,6 +46,6 @@ const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler];
     JwtStrategy,
     IsEmailUserAlreadyExistConstraint
   ],
-  exports: [LoginHandler, AuthService]
+  exports: [LoginHandler, AuthService, JwtStrategy]
 })
 export class AuthModule {}

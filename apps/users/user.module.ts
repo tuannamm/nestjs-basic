@@ -13,7 +13,7 @@ import { UpdateUserHandler } from './application/handlers/update-user.handler';
 import { DeleteUserHandler } from './application/handlers/delete-user.handler';
 import { UserService } from './user.service';
 import { CommonUtils } from 'libs/utils/utils.common';
-import { JwtStrategy } from 'apps/auth/strategy/jwt-strategy';
+
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { IsEmailUserAlreadyExistConstraint } from './validate-email';
 import { FindListUserHandler } from './application/queries/find-list-user.query';
@@ -47,7 +47,7 @@ const repositories = [
     })
   ],
   controllers: [UserController],
-  providers: [...handlers, CommonUtils, UserService, JwtService, JwtStrategy, IsEmailUserAlreadyExistConstraint],
+  providers: [...handlers, CommonUtils, UserService, JwtService, IsEmailUserAlreadyExistConstraint],
   exports: [...handlers, ...repositories, MongooseModule, UserService]
 })
 export class UserModule {}

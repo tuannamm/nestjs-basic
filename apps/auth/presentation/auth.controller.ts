@@ -11,6 +11,7 @@ import { Public } from 'libs/decorators/public.decorator';
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 import { RegisterDTO } from './dto/register.dto';
 import { User } from 'libs/decorators/user.decorator';
+import { GetNewAccessTokenCommand } from '../application/get-new-access-token.command';
 
 @Controller('auth')
 export class AuthController {
@@ -39,5 +40,14 @@ export class AuthController {
   @ResponseMessage('Get user information')
   async getAccount(@User() user) {
     return { user };
+  }
+
+  @Public()
+  @Get('/refresh')
+  @ResponseMessage('Get user by refresh token')
+  async refreshToken(@Request() request, @Res({ passthrough: true }) response: Response) {
+    const refreshToken = request.cookies['refresh_token'];
+    const command = new GetNewAccessTokenCommand(refreshToken, response);
+    return this.commandBus.execute(command);
   }
 }

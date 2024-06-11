@@ -39,4 +39,8 @@ export class UserService {
   async updateUserToken(refreshToken: string, _id: string) {
     return await this.userModel.updateOne({ _id }, { refreshToken });
   }
+
+  async findOneByToken({ refreshToken }): Promise<UserEntity | null> {
+    return this.userModel.findOne({ refreshToken });
+  }
 }
