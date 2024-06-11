@@ -13,8 +13,12 @@ import { UpdateUserHandler } from './application/handlers/update-user.handler';
 import { DeleteUserHandler } from './application/handlers/delete-user.handler';
 import { UserService } from './user.service';
 import { CommonUtils } from 'libs/utils/utils.common';
+import { JwtStrategy } from 'apps/auth/strategy/jwt-strategy';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { IsEmailUserAlreadyExistConstraint } from './validate-email';
+import { FindListUserHandler } from './application/queries/find-list-user.query';
 
-const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
+const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindListUserHandler];
 
 const repositories = [
   MongooseModule.forRootAsync({
@@ -28,9 +32,22 @@ const repositories = [
 ];
 
 @Module({
-  imports: [CqrsModule, ...repositories],
+  imports: [
+    CqrsModule,
+    ...repositories,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secretOrPrivateKey: configService.get<string>('JWT_SECRET'),
+        signOptions: {
+          expiresIn: configService.get<string>('JWT_EXPIRES_IN')
+        }
+      }),
+      inject: [ConfigService]
+    })
+  ],
   controllers: [UserController],
-  providers: [...handlers, CommonUtils, UserService],
+  providers: [...handlers, CommonUtils, UserService, JwtService, JwtStrategy, IsEmailUserAlreadyExistConstraint],
   exports: [...handlers, ...repositories, MongooseModule, UserService]
 })
 export class UserModule {}

@@ -19,7 +19,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
   @PrintLog
   async execute(command: CreateUserCommand) {
-    const { name, age, email, password, address, gender } = command;
+    const { name, age, email, password, address, gender, role, company, user } = command;
 
     if (!email) throw new MissingEmail();
     if (!password) throw new MissingPassword();
@@ -32,11 +32,20 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       email,
       password: hashedPassword,
       address,
-      gender
+      gender,
+      role,
+      company,
+      createdBy: {
+        _id: user._id,
+        email: user.email
+      }
     });
 
     if (!result) throw new CanNotCreateUser();
 
-    return result;
+    return {
+      _id: result._id,
+      createdAt: result.createdAt
+    };
   }
 }

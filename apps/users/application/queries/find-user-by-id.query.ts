@@ -19,7 +19,7 @@ export class FindUserByIdHandler implements ICommandHandler<FindUserByIdQuery> {
   async execute(query: FindUserByIdQuery) {
     const { id } = query;
 
-    const result = await this.userModel.findById(id);
+    const result = await this.userModel.findById(id).select('-password');
 
     if (!result) throw new CanNotGetUser();
 

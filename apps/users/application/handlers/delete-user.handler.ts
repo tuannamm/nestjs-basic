@@ -1,3 +1,4 @@
+import { request } from 'http';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
@@ -16,9 +17,9 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
     private readonly userModel: SoftDeleteModel<UserDocument>
   ) {}
 
-  @PrintLog
   async execute(command: DeleteUserCommand) {
-    const { id } = command;
+    const { id, request } = command;
+    const user = request.user;
 
     const result = await this.userModel.softDelete({
       _id: id
@@ -26,6 +27,12 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
 
     if (!result) throw new CanNotDeleteUser();
 
-    return result;
+    return {
+      ...result,
+      deletedBy: {
+        _id: user._id,
+        email: user.email
+      }
+    };
   }
 }

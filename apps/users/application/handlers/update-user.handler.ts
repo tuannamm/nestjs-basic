@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateUserCommand } from '../update-user.command';
-import { PrintLog } from 'libs/decorators/print-log.decorator';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserEntity } from 'apps/users/domain/entities/user.entities';
 import { Model } from 'mongoose';
+
+import { UpdateUserCommand } from '../update-user.command';
 import { CanNotUpdateUser, MissingId } from 'apps/users/user.exception';
+import { UserEntity } from 'apps/users/domain/entities/user.entities';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
@@ -13,9 +13,9 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
     private readonly userModel: Model<UserEntity>
   ) {}
 
-  @PrintLog
   async execute(command: UpdateUserCommand) {
-    const { id, name, address, age, email, phone } = command;
+    const { id, name, address, age, email, phone, role, gender, company, request } = command;
+    const user = request.user;
 
     if (!id) throw new MissingId();
 
@@ -24,9 +24,18 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
       address,
       age,
       email,
-      phone
+      phone,
+      role,
+      gender,
+      company,
+      updatedBy: {
+        _id: user._id,
+        email: user.email
+      }
     });
 
     if (!result) throw new CanNotUpdateUser();
+
+    return result;
   }
 }

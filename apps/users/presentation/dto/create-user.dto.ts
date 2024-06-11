@@ -1,5 +1,7 @@
+import { IsEmailUserAlreadyExist } from 'apps/users/validate-email';
 import { Type } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+
 import mongoose from 'mongoose';
 
 export class CompanyDTO {
@@ -14,11 +16,14 @@ export class CreateUserDTO {
   @IsString()
   name: string;
 
-  @IsString()
+  @IsNumber()
   age: number;
 
   @IsEmail()
   @IsNotEmpty()
+  // @IsEmailUserAlreadyExist({
+  //   message: 'Mail $value already exists. Choose another one.'
+  // })
   email: string;
 
   @IsString()

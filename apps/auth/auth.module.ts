@@ -15,6 +15,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategy/jwt-strategy';
 import { GetUserProfileHandler } from './application/handlers/get-user-profile.handler';
 import { RegisterHandler } from './application/handlers/register.handler';
+import { IsEmailUserAlreadyExistConstraint } from 'apps/users/validate-email';
 
 const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler];
 
@@ -35,7 +36,15 @@ const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler];
     })
   ],
   controllers: [AuthController],
-  providers: [...handler, CommonUtils, LocalStrategy, AuthService, JwtService, JwtStrategy],
+  providers: [
+    ...handler,
+    CommonUtils,
+    LocalStrategy,
+    AuthService,
+    JwtService,
+    JwtStrategy,
+    IsEmailUserAlreadyExistConstraint
+  ],
   exports: [LoginHandler, AuthService]
 })
 export class AuthModule {}

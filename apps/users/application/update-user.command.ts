@@ -9,5 +9,6 @@ export class UpdateUserCommand {
     public readonly role: string,
     public readonly gender: string,
     public readonly company: any,
+    public readonly request: any
   ) {}
 }

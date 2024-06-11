@@ -30,4 +30,10 @@ export class UserService {
       createdAt: result.createdAt
     };
   }
+
+  async userExists({ email }): Promise<boolean> {
+    const existed = await this.userModel.findOne({ email });
+
+    return !!existed;
+  }
 }

@@ -20,8 +20,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
       map((data) => ({
         statusCode: context.switchToHttp().getResponse().statusCode,
         message: this.reflector.get<string>(RESPONSE_MESSAGE, context.getHandler()) || '',
-        data,
-        meta: data.meta
+        data
       }))
     );
   }
