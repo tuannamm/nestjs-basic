@@ -44,7 +44,7 @@ export class CompanyController {
 
   @Get()
   @ResponseMessage('List company successfully fetched')
-  async findListCompany(@Query('page') currentPage: string, @Query('limit') limit: string, @Query() qs) {
+  async findListCompany(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListCompanyQuery(currentPage, limit, qs);
     return this.queryBus.execute(query);
   }

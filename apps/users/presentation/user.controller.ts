@@ -21,7 +21,7 @@ export class UserController {
 
   @Get()
   @ResponseMessage('Get all users')
-  async getAllUsers(@Query('page') currentPage: string, @Query('limit') limit: string, @Query() qs) {
+  async getAllUsers(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListUserQuery(currentPage, limit, qs);
     return this.queryBus.execute(query);
   }

@@ -29,7 +29,7 @@ export class AuthService {
     const { _id, username, email, role } = user;
     const payload = { sub: 'token login', iss: 'from server', _id, username, email, role };
     const refreshToken = await this.createRefreshToken(payload);
-    await this.userService.updateUserToken(refreshToken, _id);
+    await this.userService.updateUserRefreshToken(refreshToken, _id);
     const accessToken = await this.createAccessToken(payload);
     return {
       access_token: accessToken,
@@ -74,7 +74,7 @@ export class AuthService {
         secure: true,
         sameSite: 'none'
       });
-      await this.userService.updateUserToken(newRefreshToken, _id.toString());
+      await this.userService.updateUserRefreshToken(newRefreshToken, _id.toString());
       return {
         access_token: newAccessToken,
         user: {
@@ -95,6 +95,6 @@ export class AuthService {
   }
 
   async logout(user) {
-    return this.userService.updateUserToken('', user._id);
+    return this.userService.updateUserRefreshToken('', user._id);
   }
 }
