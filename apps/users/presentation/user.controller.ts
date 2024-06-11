@@ -42,11 +42,11 @@ export class UserController {
     return this.queryBus.execute(query);
   }
 
-  @Patch('update')
+  @Patch()
   @ResponseMessage('Updated a user')
   async updateUserById(@Body() updateUserBody: UpdateUserDTO, @Request() request: any) {
-    const { id, name, age, email, phone, address, role, company, gender } = updateUserBody;
-    const command = new UpdateUserCommand(id, name, age, email, phone, address, role, gender, company, request);
+    const { _id, name, age, email, phone, address, role, company, gender } = updateUserBody;
+    const command = new UpdateUserCommand(_id, name, age, email, phone, address, role, gender, company, request);
     return this.commandBus.execute(command);
   }
 

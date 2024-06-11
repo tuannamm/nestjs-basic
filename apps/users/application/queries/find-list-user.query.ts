@@ -18,7 +18,7 @@ export class FindListUserHandler implements IQueryHandler<FindListUserQuery> {
     const { filter, sort, population } = aqp(qs);
 
     delete filter.current;
-    delete filter.page;
+    delete filter.pageSize;
 
     const offset = (+currentPage - 1) * +limit;
     const defaultLimit = +limit ? +limit : 10;

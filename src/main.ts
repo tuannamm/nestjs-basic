@@ -14,8 +14,9 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: '*',
-    methods: 'GET, POST, PUT, DELETE, PATCH'
+    origin: true,
+    methods: 'GET, POST, PUT, DELETE, PATCH',
+    credentials: true
   });
 
   app.setGlobalPrefix('api');
@@ -30,6 +31,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)));
 
-  await app.listen(3000);
+  await app.listen(8000);
 }
 bootstrap();

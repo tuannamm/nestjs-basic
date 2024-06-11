@@ -6,5 +6,5 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class UpdateUserDTO extends PartialType(CreateUserDTO) {
   @IsString()
   @IsNotEmpty()
-  id: string;
+  _id: string;
 }
