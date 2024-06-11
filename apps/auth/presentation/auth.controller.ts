@@ -4,6 +4,7 @@ import { Response } from 'express';
 
 import { LoginCommand } from '../application/login.command';
 import { RegisterCommand } from '../application/register.command';
+import { GetNewAccessTokenCommand } from '../application/get-new-access-token.command';
 
 import { LocalAuthGuard } from '../guard/local-auth.guard';
 
@@ -11,7 +12,7 @@ import { Public } from 'libs/decorators/public.decorator';
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 import { RegisterDTO } from './dto/register.dto';
 import { User } from 'libs/decorators/user.decorator';
-import { GetNewAccessTokenCommand } from '../application/get-new-access-token.command';
+import { LogoutCommand } from '../application/logout.command';
 
 @Controller('auth')
 export class AuthController {
@@ -48,6 +49,13 @@ export class AuthController {
   async refreshToken(@Request() request, @Res({ passthrough: true }) response: Response) {
     const refreshToken = request.cookies['refresh_token'];
     const command = new GetNewAccessTokenCommand(refreshToken, response);
+    return this.commandBus.execute(command);
+  }
+
+  @Post('/logout')
+  @ResponseMessage('Logout successfully')
+  async logout(@Res({ passthrough: true }) response: Response, @User() user) {
+    const command = new LogoutCommand(response, user);
     return this.commandBus.execute(command);
   }
 }

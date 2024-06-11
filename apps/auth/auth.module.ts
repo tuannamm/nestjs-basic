@@ -9,16 +9,20 @@ import { AuthController } from './presentation/auth.controller';
 import { CommonUtils } from 'libs/utils/utils.common';
 
 import { UserModule } from 'apps/users/user.module';
-import { LocalStrategy } from './strategy/local-strategy';
-import { LoginHandler } from './application/handlers/login.handler';
-import { AuthService } from './auth.service';
-import { JwtStrategy } from './strategy/jwt-strategy';
-import { GetUserProfileHandler } from './application/handlers/get-user-profile.handler';
-import { RegisterHandler } from './application/handlers/register.handler';
-import { IsEmailUserAlreadyExistConstraint } from 'apps/users/validate-email';
-import { GetNewAccessTokenHandler } from './application/handlers/get-new-access-token.handler';
 
-const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler, GetNewAccessTokenHandler];
+import { LocalStrategy } from './strategy/local-strategy';
+import { JwtStrategy } from './strategy/jwt-strategy';
+
+import { AuthService } from './auth.service';
+import { IsEmailUserAlreadyExistConstraint } from 'apps/users/validate-email';
+
+import { GetUserProfileHandler } from './application/handlers/get-user-profile.handler';
+import { GetNewAccessTokenHandler } from './application/handlers/get-new-access-token.handler';
+import { LogoutHandler } from './application/handlers/logout.handler';
+import { LoginHandler } from './application/handlers/login.handler';
+import { RegisterHandler } from './application/handlers/register.handler';
+
+const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler, GetNewAccessTokenHandler, LogoutHandler];
 
 @Module({
   imports: [

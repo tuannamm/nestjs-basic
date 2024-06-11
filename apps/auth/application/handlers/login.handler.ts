@@ -15,8 +15,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     response.cookie('refresh_token', result.refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
-      maxAge: '3600000'
+      sameSite: 'none'
     });
 
     return result;

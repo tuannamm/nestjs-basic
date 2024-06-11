@@ -93,4 +93,8 @@ export class AuthService {
   async findUserByToken(refreshToken: string) {
     return this.userService.findOneByToken({ refreshToken });
   }
+
+  async logout(user) {
+    return this.userService.updateUserToken('', user._id);
+  }
 }
