@@ -26,6 +26,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('/login')
+  @ResponseMessage('User login')
   @ResponseMessage('Login successfully')
   async login(@Request() request) {
     const command = new LoginCommand(request.user);

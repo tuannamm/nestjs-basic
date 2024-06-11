@@ -27,15 +27,27 @@ export class AuthService {
   async login(user: IUser) {
     const { _id, username, email, role } = user;
     const payload = { sub: 'token login', iss: 'from server', _id, username, email, role };
+    const refreshToken = await this.createRefreshToken(payload);
     return {
       access_token: this.jwtService.sign(payload, {
         secret: this.configService.get<string>('JWT_SECRET'),
         expiresIn: this.configService.get<string>('JWT_EXPIRES_IN')
       }),
-      _id,
-      username,
-      email,
-      role
+      user: {
+        _id,
+        username,
+        email,
+        role
+      },
+      refreshToken
     };
+  }
+
+  async createRefreshToken(payload) {
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_REFRESH_TOKEN'),
+      expiresIn: this.configService.get<string>('JWT_JWT_REFRESH_TOKEN_EXPIRES_IN')
+    });
+    return refreshToken;
   }
 }

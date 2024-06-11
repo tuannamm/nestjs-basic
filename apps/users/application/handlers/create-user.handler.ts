@@ -33,7 +33,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       password: hashedPassword,
       address,
       gender,
-      role,
+      role: role ?? 'USER',
       company,
       createdBy: {
         _id: user._id,
