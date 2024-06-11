@@ -18,8 +18,8 @@ export class FindListCompanyHandler implements IQueryHandler<FindListCompanyQuer
     const { currentPage, limit, qs } = query;
     const { filter, sort, population } = aqp(qs);
 
+    delete filter.current;
     delete filter.page;
-    delete filter.limit;
 
     const offset = (+currentPage - 1) * +limit;
     const defaultLimit = +limit ? +limit : 10;
