@@ -10,6 +10,7 @@ import { LocalAuthGuard } from '../guard/local-auth.guard';
 import { Public } from 'libs/decorators/public.decorator';
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 import { RegisterDTO } from './dto/register.dto';
+import { User } from 'libs/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -34,8 +35,9 @@ export class AuthController {
     return this.commandBus.execute(command);
   }
 
-  @Get('/profile')
-  getProfile(@Request() request) {
-    return request.user;
+  @Get('/account')
+  @ResponseMessage('Get user information')
+  async getAccount(@User() user) {
+    return { user };
   }
 }
