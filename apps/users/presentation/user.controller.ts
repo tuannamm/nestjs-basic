@@ -7,13 +7,13 @@ import { UpdateUserDTO } from './dto/update-user.dto';
 
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 
-import { FindUserByIdQuery } from '../application/find-user-by-id.query';
+import { FindUserByIdQuery } from '../application/queries/find-user-by-id.query';
 
-import { CreateUserCommand } from '../application/create-user.command';
-import { UpdateUserCommand } from '../application/update-user.command';
-import { DeleteUserCommand } from '../application/delete-user.command';
+import { CreateUserCommand } from '../application/commands/create-user.command';
+import { UpdateUserCommand } from '../application/commands/update-user.command';
+import { DeleteUserCommand } from '../application/commands/delete-user.command';
 import { FindUserResponseDTO } from './dto/find-user-response.dto';
-import { FindListUserQuery } from '../application/find-list-user.query';
+import { FindListUserQuery } from '../application/queries/find-list-user.query';
 
 @Controller('users')
 export class UserController {

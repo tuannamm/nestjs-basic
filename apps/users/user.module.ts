@@ -7,16 +7,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserController } from './presentation/user.controller';
 import { UserEntity, UserSchema } from './domain/entities/user.entities';
 
-import { CreateUserHandler } from './application/handlers/create-user.handler';
-import { FindUserByIdHandler } from './application/queries/find-user-by-id.query';
-import { UpdateUserHandler } from './application/handlers/update-user.handler';
-import { DeleteUserHandler } from './application/handlers/delete-user.handler';
+import { CreateUserHandler } from './application/commands/handers/create-user.handler';
+import { FindUserByIdHandler } from './application/queries/handlers/find-user-by-id.handler';
+import { UpdateUserHandler } from './application/commands/handers/update-user.handler';
+import { DeleteUserHandler } from './application/commands/handers/delete-user.handler';
 import { UserService } from './user.service';
 import { CommonUtils } from 'libs/utils/utils.common';
 
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { IsEmailUserAlreadyExistConstraint } from './validate-email';
-import { FindListUserHandler } from './application/queries/find-list-user.query';
+import { FindListUserHandler } from './application/queries/handlers/find-list-user.handler';
 
 const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindListUserHandler];
 
