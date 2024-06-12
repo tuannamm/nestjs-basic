@@ -7,6 +7,7 @@ import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
 import { UserModule } from 'apps/users/user.module';
 import { AuthModule } from '../apps/auth/auth.module';
 import { CompanyModule } from '../apps/company/company.module';
+import { JobModule } from 'apps/job/job.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { CompanyModule } from '../apps/company/company.module';
     JwtModule,
     UserModule,
     AuthModule,
-    CompanyModule
+    CompanyModule,
+    JobModule
   ]
 })
 export class AppModule {}

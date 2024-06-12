@@ -31,6 +31,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)));
 
-  await app.listen(8000);
+  await app.listen(8080);
 }
 bootstrap();
