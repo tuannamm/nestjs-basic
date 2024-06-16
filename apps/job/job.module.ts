@@ -3,7 +3,6 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { JobService } from './job.service';
 import { JobController } from './presentation/job.controller';
 import { JobEntity, JobSchema } from './domain/entities/job.entities';
 import { CreateJobHandler } from './application/commands/handlers/create-job.handler';
@@ -28,7 +27,7 @@ const repositories = [
 @Module({
   imports: [CqrsModule, ...repositories],
   controllers: [JobController],
-  providers: [JobService, ...handlers],
+  providers: [...handlers],
   exports: [...handlers]
 })
 export class JobModule {}

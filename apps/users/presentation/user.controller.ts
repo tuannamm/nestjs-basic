@@ -1,19 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Request, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Request } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Builder } from 'builder-pattern';
 
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
+import { FindUserResponseDTO } from './dto/find-user-response.dto';
 
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 
 import { FindUserByIdQuery } from '../application/queries/find-user-by-id.query';
+import { FindListUserQuery } from '../application/queries/find-list-user.query';
 
 import { CreateUserCommand } from '../application/commands/create-user.command';
 import { UpdateUserCommand } from '../application/commands/update-user.command';
 import { DeleteUserCommand } from '../application/commands/delete-user.command';
-import { FindUserResponseDTO } from './dto/find-user-response.dto';
-import { FindListUserQuery } from '../application/queries/find-list-user.query';
 
 @Controller('users')
 export class UserController {
