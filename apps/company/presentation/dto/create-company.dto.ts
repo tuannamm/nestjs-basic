@@ -9,4 +9,10 @@ export class CreateCompanyDTO {
 
   @IsString()
   address: string;
+
+  @IsString()
+  logo: string;
+
+  @IsString()
+  location: string;
 }

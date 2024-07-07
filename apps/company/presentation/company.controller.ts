@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param, Delete, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Delete, Get, Query, Inject } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 import { PrintLog } from 'libs/decorators/print-log.decorator';
@@ -14,6 +14,8 @@ import { FindListCompanyQuery } from '../application/queries/find-list-company.q
 import { IUser } from 'apps/auth/presentation/user.interface';
 import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 import { User } from 'libs/decorators/user.decorator';
+import { Public } from 'libs/decorators/public.decorator';
+import { FindCompanyByIdQuery } from '../application/queries/find-company-by-id.query';
 
 @Controller('companies')
 export class CompanyController {
@@ -22,16 +24,16 @@ export class CompanyController {
   @Post()
   @PrintLog
   async createCompany(@Body() data: CreateCompanyDTO, @User() user: IUser) {
-    const { name, address, description } = data;
-    const command = new CreateCompanyCommand(name, description, address, user);
+    const { name, address, description, logo, location } = data;
+    const command = new CreateCompanyCommand(name, description, address, user, logo, location);
     return this.commandBus.execute(command);
   }
 
   @Patch(':id')
   @PrintLog
   async updateCompany(@Param() id: string, @Body() data: UpdateCompanyDTO, @User() user: IUser) {
-    const { name, address, description } = data;
-    const command = new UpdateCompanyCommand(id, name, description, address, user);
+    const { name, address, description, logo, location } = data;
+    const command = new UpdateCompanyCommand(id, name, description, address, user, logo, location);
     return this.commandBus.execute(command);
   }
 
@@ -42,10 +44,19 @@ export class CompanyController {
     return this.commandBus.execute(command);
   }
 
+  @Public()
   @Get()
   @ResponseMessage('List company successfully fetched')
   async findListCompany(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListCompanyQuery(currentPage, limit, qs);
+    return this.queryBus.execute(query);
+  }
+
+  @Public()
+  @Get(':id')
+  @ResponseMessage('Get company successfully')
+  async getCompany(@Param() id: string) {
+    const query = new FindCompanyByIdQuery(id);
     return this.queryBus.execute(query);
   }
 }

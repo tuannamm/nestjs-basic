@@ -1,16 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
-
-import * as fs from 'fs';
+import fs from 'fs';
 import { diskStorage } from 'multer';
-import { join } from 'path';
-import * as path from 'path';
+import path, { join } from 'path';
 
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
-  getRootPath() {
+  getRootPath = () => {
     return process.cwd();
-  }
+  };
 
   ensureExists(targetDirectory: string) {
     fs.mkdir(targetDirectory, { recursive: true }, (error) => {
@@ -45,19 +43,28 @@ export class MulterConfigService implements MulterOptionsFactory {
           cb(null, join(this.getRootPath(), `public/images/${folder}`));
         },
         filename: (req, file, cb) => {
-          try {
-            const extName = path.extname(file.originalname);
-            // Get image's name (without extension)
-            const baseName = path.basename(file.originalname, extName);
-            // Create the final name with a timestamp to avoid conflicts
-            const finalName = `${baseName}-${Date.now()}${extName}`;
-            cb(null, finalName);
-          } catch (error) {
-            console.error('Error processing file:', error);
-            cb(error, null);
-          }
+          //get image extension
+          let extName = path.extname(file.originalname);
+
+          //get image's name (without extension)
+          let baseName = path.basename(file.originalname, extName);
+
+          let finalName = `${baseName}-${Date.now()}${extName}`;
+          cb(null, finalName);
         }
-      })
+      }),
+      fileFilter: (req, file, cb) => {
+        const allowedFileTypes = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
+        const fileExtension = file.originalname.split('.').pop().toLowerCase();
+        const isValidFileType = allowedFileTypes.includes(fileExtension);
+
+        if (!isValidFileType) {
+          cb(new HttpException('Invalid file type', HttpStatus.UNPROCESSABLE_ENTITY), null);
+        } else cb(null, true);
+      },
+      limits: {
+        fileSize: 1024 * 1024 * 1 // 1MB
+      }
     };
   }
 }

@@ -11,6 +11,7 @@ import { User } from 'libs/decorators/user.decorator';
 import { DeleteJobCommand } from '../application/commands/delete-job.handler';
 import { GetJobByIdQuery } from '../application/queries/get-job-by-id.query.query';
 import { GetListJobsQuery } from '../application/queries/get-list-jobs.query';
+import { Public } from 'libs/decorators/public.decorator';
 
 @Controller('jobs')
 export class JobController {
@@ -38,6 +39,7 @@ export class JobController {
     return this.commandBus.execute(command);
   }
 
+  @Public()
   @Get()
   @ResponseMessage('Get list jobs')
   async getListJobs(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
@@ -59,6 +61,7 @@ export class JobController {
     return this.commandBus.execute(command);
   }
 
+  @Public()
   @Get(':id')
   async getJobById(@Param('id') id: string) {
     const query = new GetJobByIdQuery(id);

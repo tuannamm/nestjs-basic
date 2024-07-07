@@ -17,7 +17,7 @@ export class CreateCompanyHandler implements ICommandHandler<CreateCompanyComman
 
   @PrintLog
   async execute(command: CreateCompanyCommand) {
-    const { name, address, description, user } = command;
+    const { name, address, description, user, logo, location } = command;
 
     if (!name) throw new MissingName();
     if (!address) throw new MissingAddress();
@@ -27,7 +27,9 @@ export class CreateCompanyHandler implements ICommandHandler<CreateCompanyComman
       name,
       address,
       description,
-      createdBy: user
+      createdBy: user,
+      logo,
+      location
     });
 
     if (!result) throw new CanNotCreateCompany();

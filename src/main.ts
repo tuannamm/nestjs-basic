@@ -15,6 +15,8 @@ async function bootstrap() {
     logger: logLevel
   });
 
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+
   app.enableCors({
     origin: true,
     methods: 'GET, POST, PUT, DELETE, PATCH',
@@ -27,8 +29,6 @@ async function bootstrap() {
     type: VersioningType.URI, // them vao chu v
     defaultVersion: ['1', '2']
   });
-
-  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   app.use(cookieParser());
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));

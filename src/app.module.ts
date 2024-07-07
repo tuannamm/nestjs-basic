@@ -8,7 +8,8 @@ import { UserModule } from 'apps/users/user.module';
 import { AuthModule } from '../apps/auth/auth.module';
 import { CompanyModule } from '../apps/company/company.module';
 import { JobModule } from 'apps/job/job.module';
-import { FileModule } from '../apps/file/file.module';
+import { FilesModule } from '../apps/file/file.module';
+import { ResumesModule } from '../apps/resumes/resumes.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { FileModule } from '../apps/file/file.module';
     AuthModule,
     CompanyModule,
     JobModule,
-    FileModule
+    FilesModule,
+    ResumesModule
   ]
 })
 export class AppModule {}

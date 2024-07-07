@@ -46,6 +46,9 @@ export class CompanyEntity {
     _id: mongoose.Schema.Types.ObjectId;
     email: string;
   };
+
+  @Prop()
+  logo: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(CompanyEntity);

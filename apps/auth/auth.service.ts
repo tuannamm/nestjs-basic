@@ -95,6 +95,7 @@ export class AuthService {
   }
 
   async logout(user) {
+    console.log('user', user);
     return this.userService.updateUserRefreshToken('', user._id);
   }
 }
