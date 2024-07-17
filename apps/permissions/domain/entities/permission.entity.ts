@@ -1,50 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { RoleEntity } from 'apps/roles/domain/entities/role.entity';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type UserDocument = HydratedDocument<UserEntity>;
+export type PermissionDocument = HydratedDocument<PermissionEntity>;
 
 @Schema({ timestamps: true, versionKey: false })
-export class UserEntity {
-  @Prop({ auto: true })
-  _id: mongoose.Schema.Types.ObjectId;
-
+export class PermissionEntity {
   @Prop()
   name: string;
 
   @Prop()
-  age: number;
-
-  @Prop({
-    required: true
-  })
-  email: string;
-
-  @Prop({
-    required: true
-  })
-  password: string;
+  apiPath: string;
 
   @Prop()
-  refreshToken: string;
-
-  @Prop({ type: Object })
-  company: {
-    _id: mongoose.Schema.Types.ObjectId;
-    name: string;
-  };
+  method: string;
 
   @Prop()
-  address: string;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: RoleEntity.name })
-  role: mongoose.Schema.Types.ObjectId;
-
-  @Prop()
-  permissions: string[];
-
-  @Prop()
-  gender: string;
+  module: string;
 
   @Prop()
   isDeleted: boolean;
@@ -83,4 +54,4 @@ export class UserEntity {
   updatedAt: Date;
 }
 
-export const UserSchema = SchemaFactory.createForClass(UserEntity);
+export const PermissionSchema = SchemaFactory.createForClass(PermissionEntity);

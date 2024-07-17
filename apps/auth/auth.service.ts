@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   async login(user: IUser) {
-    const { _id, username, email, role } = user;
+    const { _id, username, email, role, permissions } = user;
     const payload = { sub: 'token login', iss: 'from server', _id, username, email, role };
     const refreshToken = await this.createRefreshToken(payload);
     await this.userService.updateUserRefreshToken(refreshToken, _id);

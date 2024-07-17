@@ -57,8 +57,8 @@ export class ResumesController {
     return this.queryBus.execute(query);
   }
 
-  @Get('by-user')
-  @ResponseMessage('Get resume by user')
+  @Post('by-user')
+  @ResponseMessage('Get resumes by user')
   async findResumeByUser(@User() user: any) {
     const query = new FindListResumesByUserQuery(user);
     return this.queryBus.execute(query);

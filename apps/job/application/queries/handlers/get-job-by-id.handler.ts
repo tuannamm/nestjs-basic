@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetJobByIdQuery } from '../get-job-by-id.query.query';
+import { GetJobByIdQuery } from '../get-job-by-id.query';
 import { InjectModel } from '@nestjs/mongoose';
 import { JobEntity } from 'apps/job/domain/entities/job.entities';
 import { Model } from 'mongoose';

@@ -1,4 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { BadRequestException } from '@nestjs/common';
+
 import { InjectModel } from '@nestjs/mongoose';
 import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
@@ -18,6 +20,9 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
   async execute(command: DeleteUserCommand) {
     const { id, request } = command;
     const user = request.user;
+
+    const isAdmin = await this.userModel.findOne({ _id: id, mail: "test@gmail.com" });
+    if (isAdmin) throw new BadRequestException('Can not delete admin user');
 
     const result = await this.userModel.softDelete({
       _id: id

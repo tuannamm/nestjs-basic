@@ -9,9 +9,10 @@ import { ResponseMessage } from 'libs/decorators/response-message.decorator';
 import { User } from 'libs/decorators/user.decorator';
 
 import { DeleteJobCommand } from '../application/commands/delete-job.handler';
-import { GetJobByIdQuery } from '../application/queries/get-job-by-id.query.query';
+import { GetJobByIdQuery } from '../application/queries/get-job-by-id.query';
 import { GetListJobsQuery } from '../application/queries/get-list-jobs.query';
 import { Public } from 'libs/decorators/public.decorator';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 @Controller('jobs')
 export class JobController {
@@ -63,6 +64,7 @@ export class JobController {
 
   @Public()
   @Get(':id')
+  @ResponseMessage('Get job by id')
   async getJobById(@Param('id') id: string) {
     const query = new GetJobByIdQuery(id);
     return this.queryBus.execute(query);

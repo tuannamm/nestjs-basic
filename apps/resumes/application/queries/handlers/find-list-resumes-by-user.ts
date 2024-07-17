@@ -14,7 +14,13 @@ export class FindListResumesByUserHandler implements ICommandHandler<FindListRes
   async execute(query: FindListResumesByUserQuery): Promise<any> {
     const { user } = query;
 
-    const result = await this.resumeModel.find({ userId: user._id });
+    const result = await this.resumeModel
+      .find({ userId: user._id })
+      .sort("-createdAt")
+      .populate([
+        { path: 'company', select: { name: 1 } },
+        { path: 'job', select: { name: 1 } }
+      ]);
     return result;
   }
 }

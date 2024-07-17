@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   async findOneByEmail({ email }): Promise<UserEntity | null> {
-    return this.userModel.findOne({ email }).exec();
+    return this.userModel.findOne({ email }).populate({ path: "role", select: { name: 1, permissions: 1 } });
   }
 
   async registerUser({ email, password, name, age, gender, address }): Promise<any> {
@@ -22,7 +22,8 @@ export class UserService {
       name,
       age,
       gender,
-      address
+      address,
+      role: "USER"
     });
 
     return {
