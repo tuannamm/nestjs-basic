@@ -1,6 +1,15 @@
 import { IsEmailUserAlreadyExist } from 'apps/users/validate-email';
 import { Type } from 'class-transformer';
-import { IsEmail, IsMongoId, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsMongoId,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested
+} from 'class-validator';
 
 import mongoose from 'mongoose';
 
@@ -28,9 +37,6 @@ export class CreateUserDTO {
 
   @IsString()
   password: string;
-
-  @IsString()
-  phone: string;
 
   @IsString()
   address: string;

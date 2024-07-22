@@ -4,7 +4,6 @@ export class UpdateUserCommand {
     public readonly name: string,
     public readonly age: number,
     public readonly email: string,
-    public readonly phone: string,
     public readonly address: string,
     public readonly role: string,
     public readonly gender: string,

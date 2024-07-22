@@ -27,8 +27,7 @@ export class UserController {
     return this.queryBus.execute(query);
   }
 
-  @Post('create')
-  @PrintLog
+  @Post()
   @ResponseMessage('Created a new user')
   async createUser(@Body() createUserBody: CreateUserDTO, @Request() request: any) {
     const { name, age, email, password, address, gender, role, company } = createUserBody;
@@ -49,8 +48,8 @@ export class UserController {
   @PrintLog
   @ResponseMessage('Updated a user')
   async updateUserById(@Body() updateUserBody: UpdateUserDTO, @Request() request: any) {
-    const { _id, name, age, email, phone, address, role, company, gender } = updateUserBody;
-    const command = new UpdateUserCommand(_id, name, age, email, phone, address, role, gender, company, request);
+    const { _id, name, age, email, address, role, company, gender } = updateUserBody;
+    const command = new UpdateUserCommand(_id, name, age, email, address, role, gender, company, request);
     return this.commandBus.execute(command);
   }
 

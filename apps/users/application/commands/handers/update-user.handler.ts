@@ -14,7 +14,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
   ) {}
 
   async execute(command: UpdateUserCommand) {
-    const { id, name, address, age, email, phone, role, gender, company, request } = command;
+    const { id, name, address, age, email, role, gender, company, request } = command;
     const user = request.user;
 
     if (!id) throw new MissingId();
@@ -24,7 +24,6 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
       address,
       age,
       email,
-      phone,
       role,
       gender,
       company,
