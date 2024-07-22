@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 import { UserModule } from 'apps/users/user.module';
 import { AuthModule } from '../apps/auth/auth.module';
@@ -12,6 +15,8 @@ import { FilesModule } from '../apps/file/file.module';
 import { ResumesModule } from '../apps/resumes/resumes.module';
 import { RolesModule } from 'apps/roles/roles.module';
 import { PermissionsModule } from 'apps/permissions/permissions.module';
+import { DatabasesModule } from 'apps/databases/databases.module';
+
 
 @Module({
   imports: [
@@ -31,6 +36,10 @@ import { PermissionsModule } from 'apps/permissions/permissions.module';
       cache: true,
       load: []
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/images', // This will serve the files under the /images path
+    }),
     JwtModule,
     UserModule,
     AuthModule,
@@ -39,7 +48,8 @@ import { PermissionsModule } from 'apps/permissions/permissions.module';
     FilesModule,
     ResumesModule,
     PermissionsModule,
-    RolesModule
+    RolesModule,
+    DatabasesModule
   ]
 })
 export class AppModule {}

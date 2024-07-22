@@ -24,16 +24,16 @@ export class CompanyController {
   @Post()
   @PrintLog
   async createCompany(@Body() data: CreateCompanyDTO, @User() user: IUser) {
-    const { name, address, description, logo, location } = data;
-    const command = new CreateCompanyCommand(name, description, address, user, logo, location);
+    const { name, address, description, logo } = data;
+    const command = new CreateCompanyCommand(name, description, address, user, logo);
     return this.commandBus.execute(command);
   }
 
   @Patch(':id')
   @PrintLog
   async updateCompany(@Param() id: string, @Body() data: UpdateCompanyDTO, @User() user: IUser) {
-    const { name, address, description, logo, location } = data;
-    const command = new UpdateCompanyCommand(id, name, description, address, user, logo, location);
+    const { name, address, description, logo } = data;
+    const command = new UpdateCompanyCommand(id, name, description, address, user, logo);
     return this.commandBus.execute(command);
   }
 
@@ -46,6 +46,7 @@ export class CompanyController {
 
   @Public()
   @Get()
+  @PrintLog
   @ResponseMessage('List company successfully fetched')
   async findListCompany(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListCompanyQuery(currentPage, limit, qs);
@@ -54,8 +55,9 @@ export class CompanyController {
 
   @Public()
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Get company successfully')
-  async getCompany(@Param() id: string) {
+  async getCompanyById(@Param() id: string) {
     const query = new FindCompanyByIdQuery(id);
     return this.queryBus.execute(query);
   }

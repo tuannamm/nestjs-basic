@@ -13,12 +13,14 @@ import { FindListUserQuery } from '../application/queries/find-list-user.query';
 import { CreateUserCommand } from '../application/commands/create-user.command';
 import { UpdateUserCommand } from '../application/commands/update-user.command';
 import { DeleteUserCommand } from '../application/commands/delete-user.command';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Get()
+  @PrintLog
   @ResponseMessage('Get all users')
   async getAllUsers(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListUserQuery(currentPage, limit, qs);
@@ -26,6 +28,7 @@ export class UserController {
   }
 
   @Post('create')
+  @PrintLog
   @ResponseMessage('Created a new user')
   async createUser(@Body() createUserBody: CreateUserDTO, @Request() request: any) {
     const { name, age, email, password, address, gender, role, company } = createUserBody;
@@ -35,6 +38,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Get user')
   async getUserById(@Param('id') id: string): Promise<FindUserResponseDTO> {
     const query = new FindUserByIdQuery(id);
@@ -42,6 +46,7 @@ export class UserController {
   }
 
   @Patch()
+  @PrintLog
   @ResponseMessage('Updated a user')
   async updateUserById(@Body() updateUserBody: UpdateUserDTO, @Request() request: any) {
     const { _id, name, age, email, phone, address, role, company, gender } = updateUserBody;
@@ -50,6 +55,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @PrintLog
   @ResponseMessage('Deleted a user')
   async deleteUserById(@Param('id') id: string, @Request() request: any) {
     const command = new DeleteUserCommand(id, request);

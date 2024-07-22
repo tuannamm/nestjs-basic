@@ -19,6 +19,7 @@ export class JobController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Post()
+  @PrintLog
   @ResponseMessage('Create a job')
   async createJob(@Body() createJobDto: CreateJobDTO, @User() user: any) {
     const { name, skills, company, location, salary, quantity, level, description, startDate, endDate, isActive } =
@@ -42,6 +43,7 @@ export class JobController {
 
   @Public()
   @Get()
+  @PrintLog
   @ResponseMessage('Get list jobs')
   async getListJobs(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new GetListJobsQuery(currentPage, limit, qs);
@@ -49,6 +51,7 @@ export class JobController {
   }
 
   @Delete(':id')
+  @PrintLog
   @ResponseMessage('Delete a job')
   async deleteJob(@Param('id') id: string, @Request() request: any) {
     const command = new DeleteJobCommand(id, request);
@@ -56,6 +59,7 @@ export class JobController {
   }
 
   @Patch(':id')
+  @PrintLog
   @ResponseMessage('Update a job')
   async updateJob(@Param('id') id: string, @Request() request: any, @Body() updateJob: CreateJobDTO) {
     const command = new UpdateJobCommand(id, request, updateJob);
@@ -64,6 +68,7 @@ export class JobController {
 
   @Public()
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Get job by id')
   async getJobById(@Param('id') id: string) {
     const query = new GetJobByIdQuery(id);

@@ -11,12 +11,14 @@ import { GetListPermissionQuery } from '../application/queries/get-list-permissi
 
 import { DeletePermissionCommand } from '../application/commands/delete-permission.command';
 import { GetPermissionByIdQuery } from '../application/queries/get-permission-by-id.query';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 @Controller('permissions')
 export class PermissionsController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Post()
+  @PrintLog
   @ResponseMessage('Create a new permission')
   async createPermission(@Body() createPermissionData: CreatePermissionDTO, @User() user) {
     const { name, apiPath, method, module } = createPermissionData;
@@ -25,6 +27,7 @@ export class PermissionsController {
   }
 
   @Patch(':id')
+  @PrintLog
   @ResponseMessage('Update a permission')
   async updatePermission(@Body() updatePermissionData: UpdatePermissionDTO, @Param() id: string, @User() user: any) {
     const { name, apiPath, method, module } = updatePermissionData;
@@ -33,6 +36,7 @@ export class PermissionsController {
   }
 
   @Get()
+  @PrintLog
   @ResponseMessage('Get list permission')
   async getListJobs(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new GetListPermissionQuery(currentPage, limit, qs);
@@ -40,6 +44,7 @@ export class PermissionsController {
   }
 
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Fetch a permission by id')
   async getPermissionById(@Param() id: string) {
     const query = new GetPermissionByIdQuery(id);
@@ -47,6 +52,7 @@ export class PermissionsController {
   }
 
   @Delete(':id')
+  @PrintLog
   @ResponseMessage('Delete a permission')
   async deleteJob(@Param('id') id: string, @User() user: any) {
     const command = new DeletePermissionCommand(id, user);

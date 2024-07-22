@@ -13,12 +13,14 @@ import { GetRoleByIdQuery } from '../application/queries/get-role-by-id.query';
 import { DeleteRoleCommand } from '../application/commands/delete-role.command';
 import { UpdateRoleCommand } from '../application/commands/update-role.command';
 import { CreateRoleCommand } from '../application/commands/create-role.command';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 @Controller('roles')
 export class RoleController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Post()
+  @PrintLog
   @ResponseMessage('Create a new role')
   async createRole(@Body() createPermissionData: CreateRoleDTO, @User() user) {
     const { name, description, isActive, permissions } = createPermissionData;
@@ -27,6 +29,7 @@ export class RoleController {
   }
 
   @Patch(':id')
+  @PrintLog
   @ResponseMessage('Update a role')
   async updatePermission(@Body() updateRoleData: UpdateRoleDTO, @Param() id: string, @User() user: any) {
     const { name, description, isActive, permissions } = updateRoleData;
@@ -35,6 +38,7 @@ export class RoleController {
   }
 
   @Get()
+  @PrintLog
   @ResponseMessage('Get list role')
   async getListJobs(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new GetListRoleQuery(currentPage, limit, qs);
@@ -42,6 +46,7 @@ export class RoleController {
   }
 
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Fetch a role by id')
   async getPermissionById(@Param() id: string) {
     const query = new GetRoleByIdQuery(id);
@@ -49,6 +54,7 @@ export class RoleController {
   }
 
   @Delete(':id')
+  @PrintLog
   @ResponseMessage('Delete a role')
   async deleteJob(@Param('id') id: string, @User() user: any) {
     const command = new DeleteRoleCommand(id, user);

@@ -7,6 +7,5 @@ export class CreateCompanyCommand {
     public readonly address: string,
     public readonly user: IUser,
     public readonly logo: string,
-    public readonly location: string
   ) {}
 }

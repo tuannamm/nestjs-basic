@@ -7,6 +7,9 @@ import { CommonUtils } from 'libs/utils/utils.common';
 import { UserService } from 'apps/users/user.service';
 import { UserDoesNotExist } from 'apps/auth/auth.exception';
 import { IUser } from './presentation/user.interface';
+import { InjectModel } from '@nestjs/mongoose';
+import { RoleEntity } from 'apps/roles/domain/entities/role.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -14,14 +17,27 @@ export class AuthService {
     private readonly commonUtils: CommonUtils,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    @InjectModel(RoleEntity.name)
+    private readonly roleModel: Model<RoleEntity>
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.findOneByEmail({ email: username });
+    const user = (await this.userService.findOneByEmail({ email: username })) as any;
     if (!user) throw new UserDoesNotExist();
     const isValid = this.commonUtils.isValidPassword(pass, user.password);
-    if (isValid) return user;
+    if (isValid) {
+      const userRole = user.role as unknown as { _id: string; name: string };
+      const temp = await this.roleModel.findOne({ _id: userRole._id }).populate({
+        path: 'permissions',
+        select: { _id: 1, name: 1, apiPath: 1, method: 1, module: 1 }
+      });
+      const objUser = {
+        ...user.toObject(),
+        permissions: temp?.permissions ?? []
+      };
+      return objUser;
+    }
     return null;
   }
 
@@ -39,6 +55,7 @@ export class AuthService {
         email,
         role
       },
+      permissions,
       refreshToken
     };
   }
@@ -64,10 +81,12 @@ export class AuthService {
       });
       const user = await this.findUserByToken(refreshToken);
       if (!user) throw new BadRequestException('User not found');
-      const { _id, name, email, role } = user;
+      const { _id, name, email, role, permissions } = user;
       const payload = { sub: 'token login', iss: 'from server', _id, name, email, role };
       const newRefreshToken = await this.createRefreshToken(payload);
       const newAccessToken = await this.createAccessToken(payload);
+      const userRole = user.role as unknown as { _id: string; name: string };
+      const temp = await this.roleModel.findOne({ _id: userRole._id });
       response.clearCookie('refresh_token');
       response.cookie('refresh_token', newRefreshToken, {
         httpOnly: true,
@@ -83,6 +102,7 @@ export class AuthService {
           email,
           role
         },
+        permissions: temp?.permissions ?? [],
         refresh_token: newRefreshToken
       };
     } catch (error) {
@@ -95,7 +115,6 @@ export class AuthService {
   }
 
   async logout(user) {
-    console.log('user', user);
     return this.userService.updateUserRefreshToken('', user._id);
   }
 }

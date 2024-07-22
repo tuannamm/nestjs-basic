@@ -12,6 +12,7 @@ import { FindListResumesQuery } from '../application/queries/find-list-resumes.q
 import { DeleteResumeCommand } from '../application/commands/delete-resume.command';
 import { FindResumeByIdQuery } from '../application/queries/find-resume-by-id.query';
 import { FindListResumesByUserQuery } from '../application/queries/find-list-resumes-by-user';
+import { PrintLog } from 'libs/decorators/print-log.decorator';
 
 @Controller('resumes')
 export class ResumesController {
@@ -22,6 +23,7 @@ export class ResumesController {
   private readonly queryBus: QueryBus;
 
   @Post()
+  @PrintLog
   @ResponseMessage('Created a new resume')
   async createResumes(@Body() createResumeBody: CreateUserCVDTO, @User() user) {
     const { url, company, job } = createResumeBody;
@@ -30,6 +32,7 @@ export class ResumesController {
   }
 
   @Patch(':id')
+  @PrintLog
   @ResponseMessage('Updated a resume')
   async updateResumes(@Param('id') id: string, @Body('status') status: string, @User() user) {
     const command = new UpdateResumeCommand(id, status, user);
@@ -37,6 +40,7 @@ export class ResumesController {
   }
 
   @Get()
+  @PrintLog
   @ResponseMessage('Get list resumes')
   async findListResumes(@Query('current') currentPage: string, @Query('pageSize') limit: string, @Query() qs) {
     const query = new FindListResumesQuery(currentPage, limit, qs);
@@ -44,6 +48,7 @@ export class ResumesController {
   }
 
   @Delete(':id')
+  @PrintLog
   @ResponseMessage('Deleted a resume')
   async deleteResumes(@Param('id') id: string, @User() user) {
     const command = new DeleteResumeCommand(id, user);
@@ -51,6 +56,7 @@ export class ResumesController {
   }
 
   @Get(':id')
+  @PrintLog
   @ResponseMessage('Get resume by id')
   async findResumeById(@Param('id') id: string) {
     const query = new FindResumeByIdQuery(id);
@@ -58,6 +64,7 @@ export class ResumesController {
   }
 
   @Post('by-user')
+  @PrintLog
   @ResponseMessage('Get resumes by user')
   async findResumeByUser(@User() user: any) {
     const query = new FindListResumesByUserQuery(user);

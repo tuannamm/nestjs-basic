@@ -10,8 +10,9 @@ import { CreateCompanyHandler } from './application/commands/handlers/create-com
 import { UpdateCompanyHandler } from './application/commands/handlers/update-company.handler';
 import { DeleteCompanyHandler } from './application/commands/handlers/delete-company.handler';
 import { FindListCompanyHandler } from './application/queries/handlers/find-list-company.handler';
+import { FindCompanyByIdHandler } from './application/queries/handlers/find-company-by-id.handler';
 
-const handlers = [FindListCompanyHandler, CreateCompanyHandler, UpdateCompanyHandler, DeleteCompanyHandler];
+const handlers = [FindListCompanyHandler, CreateCompanyHandler, UpdateCompanyHandler, DeleteCompanyHandler,FindCompanyByIdHandler ];
 
 const repositories = [
   MongooseModule.forRootAsync({

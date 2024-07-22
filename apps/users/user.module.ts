@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -14,9 +14,9 @@ import { DeleteUserHandler } from './application/commands/handers/delete-user.ha
 import { UserService } from './user.service';
 import { CommonUtils } from 'libs/utils/utils.common';
 
-import { JwtModule, JwtService } from '@nestjs/jwt';
 import { IsEmailUserAlreadyExistConstraint } from './validate-email';
 import { FindListUserHandler } from './application/queries/handlers/find-list-user.handler';
+import { RoleEntity, RoleSchema } from 'apps/roles/domain/entities/role.entity';
 
 const handlers = [FindUserByIdHandler, CreateUserHandler, UpdateUserHandler, DeleteUserHandler, FindListUserHandler];
 
@@ -28,7 +28,10 @@ const repositories = [
     }),
     inject: [ConfigService]
   }),
-  MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }])
+  MongooseModule.forFeature([
+    { name: UserEntity.name, schema: UserSchema },
+    { name: RoleEntity.name, schema: RoleSchema }
+  ])
 ];
 
 @Module({

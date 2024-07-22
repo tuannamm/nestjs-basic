@@ -1,8 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
-import fs from 'fs';
+const fs = require('fs');
 import { diskStorage } from 'multer';
-import path, { join } from 'path';
+import { join } from 'path';
+
+import * as path from 'path';
 
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {

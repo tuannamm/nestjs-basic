@@ -5,6 +5,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 import { DeleteRoleCommand } from '../delete-role.command';
 import { RoleDocument, RoleEntity } from 'apps/roles/domain/entities/role.entity';
+import { ADMIN_ROLE } from 'apps/databases/sample';
 
 @CommandHandler(DeleteRoleCommand)
 export class DeleteRoleHandler implements ICommandHandler<DeleteRoleCommand> {
@@ -17,7 +18,7 @@ export class DeleteRoleHandler implements ICommandHandler<DeleteRoleCommand> {
     const { id, user } = command;
     const { _id, email } = user;
 
-    const isAdminRole = await this.roleModel.findOne({ _id: id, name: 'ADMIN' });
+    const isAdminRole = await this.roleModel.findOne({ _id: id, name: ADMIN_ROLE });
     if (isAdminRole) throw new Error('Can not delete admin role');
 
     const result = await this.roleModel.softDelete({

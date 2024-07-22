@@ -12,7 +12,4 @@ export class CreateCompanyDTO {
 
   @IsString()
   logo: string;
-
-  @IsString()
-  location: string;
 }

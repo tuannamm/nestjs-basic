@@ -21,8 +21,16 @@ import { GetNewAccessTokenHandler } from './application/handlers/get-new-access-
 import { LogoutHandler } from './application/handlers/logout.handler';
 import { LoginHandler } from './application/handlers/login.handler';
 import { RegisterHandler } from './application/handlers/register.handler';
+import { GetUserInformationHandler } from './application/handlers/get-user-information.handler';
 
-const handler = [GetUserProfileHandler, LoginHandler, RegisterHandler, GetNewAccessTokenHandler, LogoutHandler];
+const handler = [
+  GetUserProfileHandler,
+  LoginHandler,
+  RegisterHandler,
+  GetNewAccessTokenHandler,
+  LogoutHandler,
+  GetUserInformationHandler
+];
 
 @Module({
   imports: [

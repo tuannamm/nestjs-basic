@@ -34,6 +34,7 @@ const repositories = [
 @Module({
   imports: [CqrsModule, ...repositories],
   controllers: [RoleController],
-  providers: [...handlers]
+  providers: [...handlers],
+  exports: [...repositories]
 })
 export class RolesModule {}

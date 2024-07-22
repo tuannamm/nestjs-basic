@@ -1,5 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 import { CompanyDocument, CompanyEntity } from 'apps/company/entities/company.entity';
@@ -17,7 +18,7 @@ export class DeleteCompanyHandler implements ICommandHandler<DeleteCompanyComman
     const { _id, email } = user;
 
     await this.companyModel.updateOne(
-      { _id: id },
+      { _id:  new mongoose.Types.ObjectId(id) },
       {
         deletedBy: {
           _id,
@@ -26,7 +27,7 @@ export class DeleteCompanyHandler implements ICommandHandler<DeleteCompanyComman
       }
     );
 
-    const result = await this.companyModel.softDelete({ _id: id });
+    const result = await this.companyModel.softDelete({ _id: new mongoose.Types.ObjectId(id) });
 
     if (!result) throw new Error('Can not delete company');
 
