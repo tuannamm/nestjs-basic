@@ -22,7 +22,6 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  @PrintLog
   @ResponseMessage('Register a new user')
   async createUser(@Body() register: RegisterDTO) {
     const { name, age, email, password, address, gender } = register;
@@ -33,7 +32,6 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  @PrintLog
   @ResponseMessage('User login')
   @ResponseMessage('Login successfully')
   async login(@Res({ passthrough: true }) response: Response, @User() user) {
@@ -60,7 +58,6 @@ export class AuthController {
   }
 
   @Post('/logout')
-  @PrintLog
   @ResponseMessage('Logout successfully')
   async logout(@Res({ passthrough: true }) response: Response, @User() user) {
     const command = new LogoutCommand(response, user);
